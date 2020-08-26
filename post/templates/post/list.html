@@ -1,0 +1,16 @@
+<h1>LIST</h1>
+
+<h1>Last title</h1>
+<h2>
+	<a href="{% url 'post_detail' pk=last.id %}">{{last.title}}</a>
+</h2>
+<p>{{last.body}}</p>
+<img src="{{last.image.url}}" alt="" style="width: 200px;">
+{% for post in posts %}
+<h2>
+	<a href="{% url 'post_detail' pk=post.id %}">{{post.title}}
+	</a>
+</h2>
+<p>{{post.body}}</p>
+<img src="{{post.image.url}}" alt="" style="width: 200px;">
+{% endfor %}
