@@ -1,16 +1,73 @@
-<h1>LIST</h1>
+{% extends 'post/base_post.html' %}
 
-<h1>Last title</h1>
-<h2>
-	<a href="{% url 'post_detail' pk=last.id %}">{{last.title}}</a>
-</h2>
-<p>{{last.body}}</p>
-<img src="{{last.image.url}}" alt="" style="width: 200px;">
-{% for post in posts %}
-<h2>
-	<a href="{% url 'post_detail' pk=post.id %}">{{post.title}}
-	</a>
-</h2>
-<p>{{post.body}}</p>
-<img src="{{post.image.url}}" alt="" style="width: 200px;">
-{% endfor %}
+
+{% block title %}
+	Posts list
+{% endblock%}
+
+{% block content %}
+
+<div class="container">
+	<div class="row mt-3">
+		<div class="col">
+			<div class="row">
+				<div class="col">
+					<div class="row">
+						<div class="col">
+							<h4 style="font-family: 'Circe Rounded'; color: #E9399C;"
+							>new</h4>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<h1 style="color: #315AF2; font-family: 'Museo Curl'; font-weight: bold;">{{last.title}}</h1>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<p>
+								{{first_paragraph}}
+							</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<a href="{% url 'post_detail' pk=last.id %}" class="btn btn-primary">Читать</a>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<img class="img-fluid" src="{{last.image.url}}" alt="">	
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	<hr />
+	<div class="row mt-5">
+		<div class="col">
+			<h2 style="font-weight: bold; color: #315AF2;"
+			>Другие статьи</h2>
+		</div>
+	</div>
+	<div class="row row-cols-1 row-cols-md-3 mt-3">
+		{% for post in posts %}
+		<div class="col mb-4">
+			<div class="card h-100">
+				<a href="{% url 'post_detail' pk=post.id %}">
+					<p class="card-text"><small class="text-muted">{{ post.date_pub }}</small></p>
+					<img class="img-fluid center-block" src="{{post.image.url}}" alt="">
+					<div class="card-body text-center">
+						<h5 style="color: #315AF2; font-weight: bold;" 
+						>{{post.title}}</h5>
+					</div>
+				</a>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+
+
+</div>
+
+{% endblock %}

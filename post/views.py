@@ -6,10 +6,26 @@ from django.http import HttpResponse
 from .forms import PostForm
 from .models import Post
 
+from django.core.paginator import Paginator
+
 def posts_list(request):
 	last = Post.objects.latest('date_pub')
 	posts = Post.objects.order_by('-date_pub')[1:]
-	return render(request, 'post/list.html', {'posts': posts, 'last': last})
+
+	# Первый параграф для последнего поста
+	first_paragraph = last.body.split('\n')[0]
+
+	# Использую пагинацию
+	paginator = Paginator(posts, 9)
+
+	page = paginator.get_page(1)
+	return render(request, 'post/list.html',
+			{
+				'last': last,
+				'posts': page.object_list,
+				'first_paragraph': first_paragraph,
+			}
+		)
 
 def post_create(request):
 	if request.method == 'POST':
